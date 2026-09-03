@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Passo 3: Estúdio Hipsométrico & Convenções Cartográficas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 sm:p-6 font-sans">
+  <div class="max-w-4xl mx-auto space-y-6">
+
+    <!-- Cabeçalho -->
+    <header class="text-center py-2 border-b border-slate-800">
+      <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase tracking-wide">
+        Fase 3 da Sequência Didática
+      </span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Estúdio Hipsométrico & Cartografia</h1>
+      <p class="text-sm text-slate-400 mt-1">Simule a pintura das cotas altimétricas e estruture os elementos do mapa</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- Coluna da Esquerda: Mapa Interativo com Moldura Cartográfica (7 cols) -->
+      <section class="lg:col-span-7 bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between border-b border-slate-700/80 pb-3 mb-4">
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <span>🎨</span> Simulação de Pintura na Placa
+            </h2>
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800">
+              Clique numa cota para pintar
+            </span>
+          </div>
+
+          <!-- Prancha do Mapa com Elementos da Cartografia -->
+          <div class="relative bg-slate-950 p-4 rounded-xl border-2 border-slate-600 max-w-[380px] mx-auto shadow-inner">
+            
+            <!-- Título do Mapa -->
+            <div id="disp-titulo" class="text-center font-bold text-xs uppercase tracking-wider text-slate-300 pb-1 border-b border-slate-800">
+              [Título do Mapa]
+            </div>
+
+            <!-- SVG com as Camadas Reais -->
+            <div class="relative aspect-square w-full my-3 flex items-center justify-center">
+              <svg id="svg-mapa" viewBox="0 0 200 200" class="w-full h-full drop-shadow">
+                <!-- Traçados injetados dinamicamente via JS -->
+              </svg>
+
+              <!-- Rosa dos Ventos (Orientação) -->
+              <div id="disp-orientacao" class="hidden absolute top-2 right-2 bg-slate-900/90 p-1.5 rounded-lg border border-slate-700 text-center shadow-md">
+                <span class="text-xs font-black text-rose-400 block leading-none">N</span>
+                <span class="text-[10px] text-slate-400">▲</span>
+              </div>
+            </div>
+
+            <!-- Rodapé da Prancha: Legenda Hipsométrica e Escala -->
+            <div class="pt-2 border-t border-slate-800 space-y-2">
+              <div id="disp-legenda" class="hidden">
+                <span class="text-[10px] font-bold uppercase text-slate-400 block mb-1">Legenda Altimétrica:</span>
+                <div id="itens-legenda" class="flex flex-wrap gap-1.5 text-[10px]">
+                  <!-- Injetado dinamicamente -->
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1">
+                <span id="disp-escala" class="hidden font-mono font-semibold text-slate-300">
+                  Escala: 1:25.000 (1cm = 250m)
+                </span>
+                <span id="disp-fonte" class="hidden italic">
+                  Fonte: Levantamento Escolar
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Seletor de Tinta Rápida -->
+        <div class="mt-4 pt-3 border-t border-slate-700/80">
+          <label class="block text-xs font-semibold text-slate-300 mb-2">Paleta de Tinta Selecionada (Padrão Cartográfico):</label>
+          <div id="paleta-cores" class="flex items-center gap-2">
+            <!-- Botões de cores da paleta -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Coluna da Direita: Validador de Elementos Marginalia (5 cols) -->
+      <section class="lg:col-span-5 space-y-4">
+        
+        <!-- Bloco de Padrões Hipsométricos -->
+        <div class="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
+          <h3 class="text-sm font-bold text-amber-300 uppercase tracking-wider mb-2">Convenção Hipsométrica</h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            Na cartografia temática, <strong>não se usam cores aleatórias</strong> para altitudes. Cores frias/verdes indicam áreas mais baixas (planícies), evoluindo para tons quentes e terrosos à medida que a altitude se eleva.
+          </p>
+          <button id="btn-aplicar-padrao" class="w-full py-2 px-3 rounded-lg text-xs font-bold bg-slate-700 hover:bg-slate-600 text-slate-200 transition border border-slate-600 flex items-center justify-center gap-2">
+            <span>✨</span> Aplicar Gradiente Automático Padrão
+          </button>
+        </div>
+
+        <!-- Checklist dos Elementos Obrigatórios (Marginalia) -->
+        <div class="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-lg">
+          <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider mb-3">
+            Elementos Obrigatórios do Mapa
+          </h3>
+          <p class="text-xs text-slate-400 mb-3">
+            Ative os componentes para montar a moldura técnica da sua maquete:
+          </p>
+
+          <div class="space-y-2.5 text-xs">
+            <label class="flex items-center gap-2.5 p-2 rounded-lg bg-slate-900/60 border border-slate-700/60 cursor-pointer hover:border-slate-500">
+              <input type="checkbox" id="chk-titulo" class="w-4 h-4 rounded text-emerald-500 focus:ring-0 bg-slate-800 border-slate-600" />
+              <div>
+                <span class="font-bold text-white block">Título e Categoria</span>
+                <span class="text-[10px] text-slate-400">Identifica o acidente geográfico</span>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-2.5 p-2 rounded-lg bg-slate-900/60 border border-slate-700/60 cursor-pointer hover:border-slate-500">
+              <input type="checkbox" id="chk-orientacao" class="w-4 h-4 rounded text-emerald-500 focus:ring-0 bg-slate-800 border-slate-600" />
+              <div>
+                <span class="font-bold text-white block">Orientação Espacial (Norte)</span>
+                <span class="text-[10px] text-slate-400">Rosa dos ventos ou indicador N</span>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-2.5 p-2 rounded-lg bg-slate-900/60 border border-slate-700/60 cursor-pointer hover:border-slate-500">
+              <input type="checkbox" id="chk-legenda" class="w-4 h-4 rounded text-emerald-500 focus:ring-0 bg-slate-800 border-slate-600" />
+              <div>
+                <span class="font-bold text-white block">Legenda Altimétrica</span>
+                <span class="text-[10px] text-slate-400">Decodifica o valor em metros de cada cor</span>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-2.5 p-2 rounded-lg bg-slate-900/60 border border-slate-700/60 cursor-pointer hover:border-slate-500">
+              <input type="checkbox" id="chk-escala" class="w-4 h-4 rounded text-emerald-500 focus:ring-0 bg-slate-800 border-slate-600" />
+              <div>
+                <span class="font-bold text-white block">Escala Cartográfica</span>
+                <span class="text-[10px] text-slate-400">Relação de redução do real para o gesso</span>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-2.5 p-2 rounded-lg bg-slate-900/60 border border-slate-700/60 cursor-pointer hover:border-slate-500">
+              <input type="checkbox" id="chk-fonte" class="w-4 h-4 rounded text-emerald-500 focus:ring-0 bg-slate-800 border-slate-600" />
+              <div>
+                <span class="font-bold text-white block">Fonte dos Dados e Autoria</span>
+                <span class="text-[10px] text-slate-400">Crédito dos dados topográficos</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Status de Validação -->
+          <div id="status-validacao" class="mt-4 p-3 rounded-xl bg-amber-950/40 border border-amber-800/60 text-amber-300 text-xs font-medium text-center">
+            Complete o checklist para liberar a certificação cartográfica.
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Camadas do Morro/Inselberg herdadas da etapa de corte
+    const camadasAltimetricas = [
+      { id: 0, cota: '100m (Base)', path: 'M 30,100 C 30,40 60,25 100,25 C 145,25 170,45 170,100 C 170,155 145,175 100,175 C 55,175 30,155 30,100 Z', cor: '#16a34a' },
+      { id: 1, cota: '200m', path: 'M 50,100 C 50,55 75,45 100,45 C 130,45 150,60 150,100 C 150,140 130,155 100,155 C 70,155 50,140 50,100 Z', cor: '#eab308' },
+      { id: 2, cota: '300m', path: 'M 70,100 C 70,70 85,65 100,65 C 118,65 130,75 130,100 C 130,125 118,135 100,135 C 82,135 70,125 70,100 Z', cor: '#ea580c' },
+      { id: 3, cota: '400m (Cume)', path: 'M 88,100 C 88,85 92,80 100,80 C 108,80 112,85 112,100 C 112,112 108,118 100,118 C 92,118 88,112 88,100 Z', cor: '#7c2d12' }
+    ];
+
+    // Paleta de tintas guache/acrílicas disponíveis
+    const tintasDisponiveis = [
+      { nome: 'Verde Planície', hex: '#16a34a' },
+      { nome: 'Verde Claro', hex: '#84cc16' },
+      { nome: 'Amarelo Planalto', hex: '#eab308' },
+      { nome: 'Laranja Média Cota', hex: '#ea580c' },
+      { nome: 'Marrom Cume', hex: '#7c2d12' },
+      { nome: 'Branco Neve/Pico', hex: '#f8fafc' }
+    ];
+
+    let tintaAtiva = tintasDisponiveis[0].hex;
+
+    const svgMapaEl = document.getElementById('svg-mapa');
+    const paletaCoresEl = document.getElementById('paleta-cores');
+    const itensLegendaEl = document.getElementById('itens-legenda');
+
+    // Elementos da moldura
+    const chkTitulo = document.getElementById('chk-titulo');
+    const chkOrientacao = document.getElementById('chk-orientacao');
+    const chkLegenda = document.getElementById('chk-legenda');
+    const chkEscala = document.getElementById('chk-escala');
+    const chkFonte = document.getElementById('chk-fonte');
+
+    const dispTitulo = document.getElementById('disp-titulo');
+    const dispOrientacao = document.getElementById('disp-orientacao');
+    const dispLegenda = document.getElementById('disp-legenda');
+    const dispEscala = document.getElementById('disp-escala');
+    const dispFonte = document.getElementById('disp-fonte');
+    const statusValidacao = document.getElementById('status-validacao');
+    const btnAplicarPadrao = document.getElementById('btn-aplicar-padrao');
+
+    // Renderiza a paleta de seleção de tinta
+    function renderizarPaleta() {
+      paletaCoresEl.innerHTML = '';
+      tintasDisponiveis.forEach(tinta => {
+        const btn = document.createElement('button');
+        btn.className = `w-8 h-8 rounded-full border-2 transition transform active:scale-95 ${
+          tintaAtiva === tinta.hex ? 'border-white scale-110 shadow-lg' : 'border-slate-600'
+        }`;
+        btn.style.backgroundColor = tinta.hex;
+        btn.title = tinta.nome;
+        btn.onclick = () => {
+          tintaAtiva = tinta.hex;
+          renderizarPaleta();
+        };
+        paletaCoresEl.appendChild(btn);
+      });
+    }
+
+    // Desenha o mapa e atualiza a legenda técnica
+    function renderizarMapa() {
+      svgMapaEl.innerHTML = '';
+      itensLegendaEl.innerHTML = '';
+
+      camadasAltimetricas.forEach((camada) => {
+        const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathEl.setAttribute('d', camada.path);
+        pathEl.setAttribute('fill', camada.cor);
+        pathEl.setAttribute('stroke', '#0f172a');
+        pathEl.setAttribute('stroke-width', '1.5');
+        pathEl.classList.add('cursor-pointer', 'transition-colors', 'duration-200');
+
+        // Permite o aluno "pintar" clicando sobre o degrau
+        pathEl.onclick = () => {
+          camada.cor = tintaAtiva;
+          renderizarMapa();
+        };
+
+        svgMapaEl.appendChild(pathEl);
+
+        // Atualiza item da legenda correspondente
+        const itemLeg = document.createElement('div');
+        itemLeg.className = 'flex items-center gap-1.5 bg-slate-900 px-2 py-0.5 rounded border border-slate-800';
+        itemLeg.innerHTML = `
+          <span class="w-3 h-3 rounded-sm inline-block border border-slate-600" style="background-color: ${camada.cor}"></span>
+          <span class="text-slate-300 font-mono">${camada.cota}</span>
+        `;
+        itensLegendaEl.appendChild(itemLeg);
+      });
+
+      // Moldura guia
+      const moldura = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      moldura.setAttribute('x', '2');
+      moldura.setAttribute('y', '2');
+      moldura.setAttribute('width', '196');
+      moldura.setAttribute('height', '196');
+      moldura.setAttribute('fill', 'none');
+      moldura.setAttribute('stroke', '#334155');
+      moldura.setAttribute('stroke-width', '1');
+      svgMapaEl.appendChild(moldura);
+    }
+
+    // Aplica padrão cartográfico internacional automaticamente
+    btnAplicarPadrao.onclick = () => {
+      camadasAltimetricas[0].cor = '#16a34a'; // Base baixa
+      camadasAltimetricas[1].cor = '#84cc16'; // Transição
+      camadasAltimetricas[2].cor = '#ea580c'; // Média/alta
+      camadasAltimetricas[3].cor = '#7c2d12'; // Cume
+      renderizarMapa();
+    };
+
+    // Controle dos checkboxes de convenção cartográfica
+    function atualizarChecklist() {
+      dispTitulo.textContent = chkTitulo.checked ? 'Carta Hipsométrica: Morro Testemunha' : '[Título do Mapa]';
+      dispTitulo.className = chkTitulo.checked 
+        ? 'text-center font-bold text-xs uppercase tracking-wider text-emerald-400 pb-1 border-b border-slate-800'
+        : 'text-center font-bold text-xs uppercase tracking-wider text-slate-500 pb-1 border-b border-slate-800';
+
+      dispOrientacao.classList.toggle('hidden', !chkOrientacao.checked);
+      dispLegenda.classList.toggle('hidden', !chkLegenda.checked);
+      dispEscala.classList.toggle('hidden', !chkEscala.checked);
+      dispFonte.classList.toggle('hidden', !chkFonte.checked);
+
+      const todosMarcados = chkTitulo.checked && chkOrientacao.checked && chkLegenda.checked && chkEscala.checked && chkFonte.checked;
+
+      if (todosMarcados) {
+        statusValidacao.className = 'mt-4 p-3 rounded-xl bg-emerald-950/50 border border-emerald-700 text-emerald-300 text-xs font-bold text-center';
+        statusValidacao.innerHTML = '✅ Padrão Cartográfico Aprovado! Sua maquete física cumpre todos os critérios normativos.';
+      } else {
+        statusValidacao.className = 'mt-4 p-3 rounded-xl bg-amber-950/40 border border-amber-800/60 text-amber-300 text-xs font-medium text-center';
+        statusValidacao.textContent = 'Complete o checklist para liberar a certificação cartográfica.';
+      }
+    }
+
+    [chkTitulo, chkOrientacao, chkLegenda, chkEscala, chkFonte].forEach(el => {
+      el.addEventListener('change', atualizarChecklist);
+    });
+
+    // Inicialização
+    renderizarPaleta();
+    renderizarMapa();
+  </script>
+</body>
+</html>

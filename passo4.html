@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Passo 4: Diário de Bordo & Síntese Geográfica</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      body { background: white !important; color: black !important; padding: 0 !important; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 sm:p-6 font-sans">
+  <div class="max-w-4xl mx-auto space-y-6">
+
+    <!-- Cabeçalho Interativo -->
+    <header class="no-print text-center py-2 border-b border-slate-800">
+      <div class="flex items-center justify-center gap-2 mb-1">
+        <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30 uppercase tracking-wide">
+          Fase 4 da Sequência Didática
+        </span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Diário de Bordo & Portfólio</h1>
+      <p class="text-sm text-slate-400 mt-1">Documentação do processo técnico e consolidação do aprendizado geomorfológico</p>
+    </header>
+
+    <!-- Formulário do Diário (Oculto na Impressão) -->
+    <main class="no-print space-y-6">
+
+      <!-- 1. Identificação da Equipe e Turma -->
+      <section class="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-xl">
+        <h2 class="text-base font-bold text-purple-300 flex items-center gap-2 mb-4">
+          <span>👥</span> 1. Identificação do Projeto
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Nome da Equipe / Grupo</label>
+            <input id="input-equipe" type="text" placeholder="Ex: Grupo Relevo Sertanejo"
+              class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Integrantes (Nomes)</label>
+            <input id="input-integrantes" type="text" placeholder="Ex: Ana, Carlos, Lucas e Marina"
+              class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-400" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Turma / Código</label>
+            <input id="input-turma" type="text" placeholder="Ex: GEO-7B"
+              class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-400 font-mono" />
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Registro Fotográfico das Etapas Físicas -->
+      <section class="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-xl">
+        <div class="flex items-center justify-between mb-4 border-b border-slate-700/80 pb-2">
+          <h2 class="text-base font-bold text-emerald-300 flex items-center gap-2">
+            <span>📷</span> 2. Comprovação Prática (3 Fases)
+          </h2>
+          <span class="text-xs text-slate-400 font-mono">Upload ou Câmera Direta</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          <!-- Foto 1: Bloco e Carbono -->
+          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/80 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-slate-200 block mb-1">Etapa A: Molde & Carbono</span>
+              <p class="text-[11px] text-slate-400 mb-3">Placa de gesso desmoldada com as curvas de nível decaladas.</p>
+              
+              <div id="preview-box-1" class="aspect-video w-full bg-slate-950 rounded-lg border border-dashed border-slate-700 flex items-center justify-center overflow-hidden relative mb-2">
+                <span id="label-empty-1" class="text-xs text-slate-500">Sem foto enviada</span>
+                <img id="img-preview-1" class="hidden w-full h-full object-cover" />
+              </div>
+            </div>
+            <label class="w-full py-2 px-3 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-center cursor-pointer transition active:scale-95">
+              <span>Carregar Foto</span>
+              <input type="file" accept="image/*" class="hidden" onchange="processarFoto(this, 1)" />
+            </label>
+          </div>
+
+          <!-- Foto 2: Desbaste e Degraus -->
+          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/80 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-slate-200 block mb-1">Etapa B: Escultura 3D</span>
+              <p class="text-[11px] text-slate-400 mb-3">Gesso entalhado demonstrando os patamares de declividade.</p>
+              
+              <div id="preview-box-2" class="aspect-video w-full bg-slate-950 rounded-lg border border-dashed border-slate-700 flex items-center justify-center overflow-hidden relative mb-2">
+                <span id="label-empty-2" class="text-xs text-slate-500">Sem foto enviada</span>
+                <img id="img-preview-2" class="hidden w-full h-full object-cover" />
+              </div>
+            </div>
+            <label class="w-full py-2 px-3 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-center cursor-pointer transition active:scale-95">
+              <span>Carregar Foto</span>
+              <input type="file" accept="image/*" class="hidden" onchange="processarFoto(this, 2)" />
+            </label>
+          </div>
+
+          <!-- Foto 3: Pintura e Moldura Completa -->
+          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/80 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-slate-200 block mb-1">Etapa C: Maquete Final</span>
+              <p class="text-[11px] text-slate-400 mb-3">Pintura hipsométrica finalizada com legenda, rosa dos ventos e escala.</p>
+              
+              <div id="preview-box-3" class="aspect-video w-full bg-slate-950 rounded-lg border border-dashed border-slate-700 flex items-center justify-center overflow-hidden relative mb-2">
+                <span id="label-empty-3" class="text-xs text-slate-500">Sem foto enviada</span>
+                <img id="img-preview-3" class="hidden w-full h-full object-cover" />
+              </div>
+            </div>
+            <label class="w-full py-2 px-3 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-center cursor-pointer transition active:scale-95">
+              <span>Carregar Foto</span>
+              <input type="file" accept="image/*" class="hidden" onchange="processarFoto(this, 3)" />
+            </label>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 3. Síntese Geográfica Reflexiva -->
+      <section class="bg-slate-800 rounded-2xl p-5 border border-slate-700 shadow-xl space-y-4">
+        <h2 class="text-base font-bold text-amber-300 flex items-center gap-2">
+          <span>📝</span> 3. Síntese Geográfica & Análise Espacial
+        </h2>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            Pergunta 1: Como o espaçamento entre as curvas de nível no gesso representou a declividade do terreno?
+          </label>
+          <textarea id="resposta-1" rows="2" placeholder="Explique a diferença entre áreas com linhas muito próximas e áreas com linhas afastadas..."
+            class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-amber-400"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            Pergunta 2: De que forma a paleta hipsométrica facilitou a leitura da maquete em comparação com o mapa 2D?
+          </label>
+          <textarea id="resposta-2" rows="2" placeholder="Relacione as cores utilizadas com a percepção visual do relevo tridimensional..."
+            class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-amber-400"></textarea>
+        </div>
+      </section>
+
+      <!-- Botões de Ação Final -->
+      <div class="flex flex-col sm:flex-row gap-3 pt-2">
+        <button onclick="gerarRelatorioVisual()" class="flex-1 py-3 px-4 rounded-xl font-bold bg-emerald-500 hover:bg-emerald-600 text-slate-950 transition active:scale-95 flex items-center justify-center gap-2 shadow-lg">
+          <span>📄</span> Visualizar Relatório de Entrega / Imprimir
+        </button>
+        <button onclick="baixarArquivoJSON()" class="py-3 px-4 rounded-xl font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition active:scale-95 flex items-center justify-center gap-2">
+          <span>💾</span> Exportar Dados (JSON)
+        </button>
+      </div>
+
+    </main>
+
+    <!-- ÁREA DE IMPRESSÃO / RELATÓRIO TÉCNICO (Renderizado via JS) -->
+    <div id="area-relatorio" class="print-only hidden p-8 text-black bg-white">
+      <!-- Injetado dinamicamente para geração em PDF ou folha A4 -->
+    </div>
+
+  </div>
+
+  <script>
+    // Armazenamento em memória das imagens em Base64 para visualização e exportação
+    const fotosRegistradas = {
+      etapa1: null,
+      etapa2: null,
+      etapa3: null
+    };
+
+    // Processa a imagem carregada do celular/PC e compacta via Canvas
+    function processarFoto(input, etapaNum) {
+      if (!input.files || !input.files[0]) return;
+
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+          // Redimensiona para manter o arquivo leve (máx 800px)
+          const canvas = document.createElement('canvas');
+          const maxDim = 800;
+          let w = img.width;
+          let h = img.height;
+
+          if (w > h && w > maxDim) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else if (h > maxDim) {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+
+          const base64Compactado = canvas.toDataURL('image/jpeg', 0.8);
+          fotosRegistradas[`etapa${etapaNum}`] = base64Compactado;
+
+          // Atualiza o card de preview
+          const previewImg = document.getElementById(`img-preview-${etapaNum}`);
+          const labelEmpty = document.getElementById(`label-empty-${etapaNum}`);
+          previewImg.src = base64Compactado;
+          previewImg.classList.remove('hidden');
+          labelEmpty.classList.add('hidden');
+        };
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    // Monta o layout limpo de entrega para a banca avaliadora / professor
+    function gerarRelatorioVisual() {
+      const equipe = document.getElementById('input-equipe').value || 'Não informado';
+      const integrantes = document.getElementById('input-integrantes').value || 'Não informado';
+      const turma = document.getElementById('input-turma').value || 'Não informado';
+      const resp1 = document.getElementById('resposta-1').value || '(Sem resposta dissertativa)';
+      const resp2 = document.getElementById('resposta-2').value || '(Sem resposta dissertativa)';
+
+      const relatorioEl = document.getElementById('area-relatorio');
+      relatorioEl.innerHTML = `
+        <div class="border-b-2 border-black pb-4 mb-6 text-center">
+          <h1 class="text-2xl font-black uppercase tracking-wide">Relatório Didático de Cartografia no Gesso</h1>
+          <p class="text-xs text-gray-600 mt-1">Laboratório Prático de Modelagem Geomorfológica Tridimensional</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-gray-100 p-3 rounded border border-gray-300 text-xs mb-6">
+          <div><strong>Equipe:</strong> ${equipe}</div>
+          <div><strong>Turma:</strong> ${turma}</div>
+          <div><strong>Data:</strong> ${new Date().toLocaleDateString('pt-BR')}</div>
+          <div class="col-span-3 mt-1"><strong>Integrantes:</strong> ${integrantes}</div>
+        </div>
+
+        <div class="mb-6">
+          <h2 class="text-sm font-bold uppercase border-b border-gray-300 pb-1 mb-3">Evidências do Processo Escultural</h2>
+          <div class="grid grid-cols-3 gap-4 text-center">
+            <div class="border p-2 rounded">
+              <span class="text-[10px] font-bold block mb-1">A. Transferência com Carbono</span>
+              <div class="h-36 bg-gray-50 flex items-center justify-center border overflow-hidden">
+                ${fotosRegistradas.etapa1 ? `<img src="${fotosRegistradas.etapa1}" class="max-h-full max-w-full object-contain" />` : '<span class="text-[10px] text-gray-400">Sem Registro</span>'}
+              </div>
+            </div>
+            <div class="border p-2 rounded">
+              <span class="text-[10px] font-bold block mb-1">B. Entalhe / Desbaste</span>
+              <div class="h-36 bg-gray-50 flex items-center justify-center border overflow-hidden">
+                ${fotosRegistradas.etapa2 ? `<img src="${fotosRegistradas.etapa2}" class="max-h-full max-w-full object-contain" />` : '<span class="text-[10px] text-gray-400">Sem Registro</span>'}
+              </div>
+            </div>
+            <div class="border p-2 rounded">
+              <span class="text-[10px] font-bold block mb-1">C. Maquete Pintada</span>
+              <div class="h-36 bg-gray-50 flex items-center justify-center border overflow-hidden">
+                ${fotosRegistradas.etapa3 ? `<img src="${fotosRegistradas.etapa3}" class="max-h-full max-w-full object-contain" />` : '<span class="text-[10px] text-gray-400">Sem Registro</span>'}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <h2 class="text-sm font-bold uppercase border-b border-gray-300 pb-1">Análise Espacial & Conceitos Consolidados</h2>
+          <div>
+            <strong class="block text-gray-800 mb-0.5">1. Leitura de Declividade através das Curvas de Nível:</strong>
+            <p class="text-gray-700 leading-relaxed bg-gray-50 p-2 rounded border border-gray-200">${resp1}</p>
+          </div>
+          <div>
+            <strong class="block text-gray-800 mb-0.5">2. Função Cognitiva da Pintura Hipsométrica:</strong>
+            <p class="text-gray-700 leading-relaxed bg-gray-50 p-2 rounded border border-gray-200">${resp2}</p>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-gray-300 flex justify-between items-center text-[10px] text-gray-500">
+          <span>Validação Docente: __________________________________</span>
+          <span>Conceito / Nota: [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]</span>
+        </div>
+      `;
+
+      // Aciona o diálogo de impressão ou PDF nativo
+      window.print();
+    }
+
+    // Exporta pacote JSON estruturado pronto para envio a APIs ou gravação local
+    function baixarArquivoJSON() {
+      const dados = {
+        projeto: 'Cartografia no Gesso',
+        geradoEm: new Date().toISOString(),
+        equipe: document.getElementById('input-equipe').value,
+        integrantes: document.getElementById('input-integrantes').value,
+        turma: document.getElementById('input-turma').value,
+        analise: {
+          pergunta1_declividade: document.getElementById('resposta-1').value,
+          pergunta2_hipsométrica: document.getElementById('resposta-2').value
+        },
+        evidencias_base64: fotosRegistradas
+      };
+
+      const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `diario-gesso-${dados.turma || 'turma'}-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

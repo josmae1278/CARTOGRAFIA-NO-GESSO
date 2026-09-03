@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cartografia no Gesso - Sequência Didática Digital</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 sm:p-6 font-sans">
+  <div class="max-w-2xl mx-auto space-y-6">
+
+    <!-- Cabeçalho Principal -->
+    <header class="text-center py-4 border-b border-slate-800">
+      <span class="px-3 py-1 rounded-full text-xs font-bold tracking-widest bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase">
+        Sequência Didática Digital
+      </span>
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-white mt-2 tracking-tight">
+        🗺️ CARTOGRAFIA NO GESSO
+      </h1>
+      <p class="text-sm sm:text-base text-slate-400 mt-1 italic">
+        Aprender Cartografia conhecendo e representando o lugar onde vivemos.
+      </p>
+
+      <!-- Barra de Progresso Geral -->
+      <div class="mt-5 max-w-md mx-auto bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+        <div class="flex justify-between items-center text-xs font-bold mb-1.5">
+          <span class="text-slate-300 uppercase tracking-wider">Seu Avanço na Trilha</span>
+          <span id="txt-progresso" class="text-emerald-400 font-mono">0 de 11 concluídos (0%)</span>
+        </div>
+        <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800">
+          <div id="barra-progresso" class="bg-gradient-to-r from-amber-500 via-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500 w-0"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Menu Interativo de 11 Etapas -->
+    <main class="space-y-3">
+      <div class="flex justify-between items-center px-1">
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Trilha Pedagógica</h2>
+        <button onclick="zerarProgresso()" class="text-[11px] text-slate-500 hover:text-rose-400 transition underline">
+          Reiniciar Trilha
+        </button>
+      </div>
+
+      <div id="lista-modulos" class="space-y-2.5">
+        <!-- Itens gerados dinamicamente via JavaScript -->
+      </div>
+    </main>
+
+    <!-- Modal de Conteúdo / Leitor do Módulo -->
+    <div id="modal-modulo" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-slate-800 border border-slate-700 w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-start border-b border-slate-700 pb-3">
+            <div>
+              <span id="modal-numero" class="text-xs font-bold text-amber-400 uppercase tracking-wider">Módulo</span>
+              <h3 id="modal-titulo" class="text-lg font-bold text-white mt-0.5">Título</h3>
+            </div>
+            <button onclick="fecharModal()" class="text-slate-400 hover:text-white text-lg font-bold px-2">✕</button>
+          </div>
+          <div id="modal-corpo" class="py-4 text-sm text-slate-300 space-y-3 overflow-y-auto max-h-[50vh]">
+            <!-- Conteúdo textual e diretrizes pedagógicas -->
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-700/80 flex gap-2">
+          <button id="btn-concluir-modal" class="flex-1 py-2.5 px-4 rounded-xl font-bold bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm transition active:scale-95 shadow">
+            Marcar como Concluído
+          </button>
+          <button onclick="fecharModal()" class="py-2.5 px-4 rounded-xl font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm transition">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rodapé Contextual -->
+    <footer class="text-center py-4 border-t border-slate-800/80 text-xs text-slate-500">
+      Geografia Escolar • Contexto Regional do Semiárido e Polo Gesseiro
+    </footer>
+
+  </div>
+
+  <script>
+    // Definição completa da Sequência Didática (11 Módulos da Imagem)
+    const modulos = [
+      {
+        id: 1,
+        icone: '🧠',
+        titulo: 'O que eu já sei?',
+        subtitulo: 'Sondagem prévia de noções espaciais e relevo',
+        tipo: 'teoria',
+        conteudo: `
+          <p><strong>Diagnóstico Inicial:</strong></p>
+          <p>Antes de começarmos, converse com seus colegas de equipe:</p>
+          <ul class="list-disc pl-5 space-y-1 text-xs">
+            <li>Como você explicaria para alguém o caminho da sua casa até a escola?</li>
+            <li>O terreno da sua cidade é totalmente plano ou existem morros, vales e serras?</li>
+            <li>Você já viu um mapa que mostra as subidas e descidas de um terreno?</li>
+          </ul>
+        `
+      },
+      {
+        id: 2,
+        icone: '📍',
+        titulo: 'Onde estamos?',
+        subtitulo: 'Localização, limites municipais e pertencimento',
+        tipo: 'teoria',
+        conteudo: `
+          <p><strong>Compreensão do Espaço Vivido:</strong></p>
+          <p>Identifique as coordenadas geográficas do seu município e sua posição no mapa regional do Polo Gesseiro.</p>
+          <p class="text-xs bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+            <strong>Atividade de campo/sala:</strong> Encontre os pontos cardeais em relação à sua sala de aula utilizando a bússola do celular ou o movimento aparente do Sol.
+          </p>
+        `
+      },
+      {
+        id: 3,
+        icone: '📖',
+        titulo: 'Aprendendo Cartografia',
+        subtitulo: 'Elementos do mapa, escalas e curvas de nível',
+        tipo: 'teoria',
+        linkExterno: 'passo3.html',
+        linkTexto: 'Abrir Estúdio de Convenções Cartográficas',
+        conteudo: `
+          <p><strong>Alfabetização Cartográfica:</strong></p>
+          <p>Todo mapa confiável exige cinco elementos essenciais: <em>Título, Orientação, Escala, Legenda e Fonte</em>.</p>
+          <p>Nesta etapa, aprendemos que as <strong>curvas de nível</strong> unem pontos de mesma altitude (cotas altimétricas). Quando as linhas estão muito juntas, o morro é íngreme; quando estão afastadas, o relevo é suave.</p>
+        `
+      },
+      {
+        id: 4,
+        icone: '🪨',
+        titulo: 'Conhecendo o Polo Gesseiro',
+        subtitulo: 'Origem geológica da gipsita e relevância socioeconômica',
+        tipo: 'teoria',
+        conteudo: `
+          <p><strong>O Mineral que Transforma a Região:</strong></p>
+          <p>A gipsita é um mineral evaporítico formado há milhões de anos na bacia sedimentar. Sua desidratação industrial dá origem ao gesso em pó.</p>
+          <p>Além de motor econômico da construção civil, o gesso é nosso suporte de escultura tridimensional nesta oficina.</p>
+        `
+      },
+      {
+        id: 5,
+        icone: '🌵',
+        titulo: 'Cartografia e Caatinga',
+        subtitulo: 'Morfologia semiárida: inselbergs, depressões e chapadas',
+        tipo: 'teoria',
+        conteudo: `
+          <p><strong>Paisagens do Semiárido:</strong></p>
+          <p>A paisagem local é marcada por formas residuais cristalinas (como inselbergs) e relevos tabulares (chapadas).</p>
+          <p>A altitude interfere diretamente no clima local, na formação de brejos de altitude e na distribuição da vegetação nativa da Caatinga.</p>
+        `
+      },
+      {
+        id: 6,
+        icone: '🛰️',
+        titulo: 'Analisando imagens',
+        subtitulo: 'Sensoriamento remoto e interpretação de relevo por satélite',
+        tipo: 'teoria',
+        conteudo: `
+          <p><strong>Olhar Espacial:</strong></p>
+          <p>Compare imagens de satélite ópticas com Modelos Digitais de Elevação (MDE).</p>
+          <p>Observe como as sombras nas encostas das imagens revelam a profundidade dos vales fluviais e a crista das elevações.</p>
+        `
+      },
+      {
+        id: 7,
+        icone: '🔎',
+        titulo: 'Investigando o território',
+        subtitulo: 'Problematização ambiental e recorte da área de modelagem',
+        tipo: 'teoria',
+        conteudo: `
+          <p><strong>Definição do Objeto de Estudo:</strong></p>
+          <p>Escolha qual feição do relevo local sua equipe irá representar na maquete física (um inselberg, um vale seco temporário ou uma escarpa de chapada).</p>
+        `
+      },
+      {
+        id: 8,
+        icone: '✏️',
+        titulo: 'Construindo o mapa',
+        subtitulo: 'Fatiamento altimétrico e geração dos gabaritos de corte',
+        tipo: 'pratica',
+        linkExterno: 'passo2.html',
+        linkTexto: 'Abrir Seletor de Terreno & Lâminas de Impressão',
+        conteudo: `
+          <p><strong>Fatiamento Altimétrico:</strong></p>
+          <p>Esta etapa decompõe a montanha em lâminas horizontais correspondentes a cada cota de nível.</p>
+          <p>Acesse o módulo de impressão para gerar o gabarito em folhas A4 que servirão para o decalque com papel carbono.</p>
+        `
+      },
+      {
+        id: 9,
+        icone: '🧱',
+        titulo: 'Mapa na placa de gesso',
+        subtitulo: 'Culminância Prática: dosagem, pega, escultura e pintura',
+        tipo: 'destaque',
+        linkExterno: 'oficina.html',
+        linkTexto: 'Abrir Calculadora de Gesso & Cronômetro de Cura',
+        conteudo: `
+          <p class="text-amber-300 font-bold">⭐ Culminância da Sequência Didática!</p>
+          <p>Coloque a mão na massa na oficina:</p>
+          <ol class="list-decimal pl-5 space-y-1 text-xs">
+            <li>Calcule o pó de gesso e a água exatos para a fôrma de 20x20 cm.</li>
+            <li>Siga o cronômetro sonoro durante as fases de polvilhamento e cura térmica.</li>
+            <li>Decalque as curvas com papel carbono e desbaste os patamares com goiva/espátula.</li>
+            <li>Finalize com a pintura hipsométrica convencionada.</li>
+          </ol>
+        `
+      },
+      {
+        id: 10,
+        icone: '🎤',
+        titulo: 'Apresentando meu mapa',
+        subtitulo: 'Comunicação científica, curadoria e diário fotográfico',
+        tipo: 'pratica',
+        linkExterno: 'passo4.html',
+        linkTexto: 'Abrir Diário de Bordo & Registro Fotográfico',
+        conteudo: `
+          <p><strong>Socialização do Conhecimento:</strong></p>
+          <p>Carregue as fotos das 3 fases práticas no Diário de Bordo e responda à síntese reflexiva sobre a declividade.</p>
+          <p>Prepare uma fala de 3 minutos com a equipe apresentando a maquete para a turma.</p>
+        `
+      },
+      {
+        id: 11,
+        icone: '✅',
+        titulo: 'Avaliação',
+        subtitulo: 'Autoavaliação, consolidação dos saberes e fechamento',
+        tipo: 'avaliacao',
+        conteudo: `
+          <p><strong>Consolidação da Aprendizagem:</strong></p>
+          <p>Verifique o quanto seus conhecimentos evoluíram desde o Módulo 1.</p>
+          <ul class="list-disc pl-5 space-y-1 text-xs">
+            <li>Você consegue identificar a cota mais alta de um mapa sem olhar o número?</li>
+            <li>Consegue correlacionar a proximidade das curvas com o esforço físico para subir uma encosta?</li>
+          </ul>
+          <p class="text-emerald-400 font-bold mt-2">Parabéns por completar a oficina de Cartografia no Gesso!</p>
+        `
+      }
+    ];
+
+    // Gerenciamento de Estado no localStorage
+    let progresso = JSON.parse(localStorage.getItem('cartografia_progresso')) || [];
+
+    const listaModulosEl = document.getElementById('lista-modulos');
+    const barraProgressoEl = document.getElementById('barra-progresso');
+    const txtProgressoEl = document.getElementById('txt-progresso');
+
+    const modalModulo = document.getElementById('modal-modulo');
+    const modalNumero = document.getElementById('modal-numero');
+    const modalTitulo = document.getElementById('modal-titulo');
+    const modalCorpo = document.getElementById('modal-corpo');
+    const btnConcluirModal = document.getElementById('btn-concluir-modal');
+
+    let moduloAbertoId = null;
+
+    function renderizarMenu() {
+      listaModulosEl.innerHTML = '';
+
+      modulos.forEach((mod) => {
+        const concluido = progresso.includes(mod.id);
+        const card = document.createElement('div');
+
+        // Destaque visual especial para o Módulo 9 (Culminância)
+        let classesBase = 'p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between ';
+        if (mod.id === 9) {
+          classesBase += concluido 
+            ? 'bg-amber-950/40 border-amber-500/80 shadow-md ring-1 ring-amber-500/40' 
+            : 'bg-gradient-to-r from-amber-950/60 to-slate-800 border-amber-500 shadow-lg';
+        } else {
+          classesBase += concluido 
+            ? 'bg-slate-800/50 border-emerald-500/50 text-slate-300' 
+            : 'bg-slate-800 border-slate-700 hover:border-slate-500';
+        }
+
+        card.className = classesBase;
+        card.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${mod.icone}</span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold font-mono ${concluido ? 'text-emerald-400' : 'text-slate-400'}">
+                  ${mod.id.toString().padStart(2, '0')}.
+                </span>
+                <h3 class="text-sm font-bold ${mod.id === 9 ? 'text-amber-300' : 'text-white'}">
+                  ${mod.titulo}
+                </h3>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5 line-clamp-1">${mod.subtitulo}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            ${concluido ? '<span class="text-xs font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">✓ Concluído</span>' : '<span class="text-xs text-slate-500">Pendente</span>'}
+          </div>
+        `;
+
+        card.onclick = () => abrirModal(mod.id);
+        listaModulosEl.appendChild(card);
+      });
+
+      atualizarBarra();
+    }
+
+    function abrirModal(id) {
+      const mod = modulos.find(m => m.id === id);
+      moduloAbertoId = id;
+
+      modalNumero.textContent = `Módulo ${mod.id} de 11`;
+      modalTitulo.textContent = `${mod.icone} ${mod.titulo}`;
+      
+      let htmlCorpo = mod.conteudo;
+      if (mod.linkExterno) {
+        htmlCorpo += `
+          <div class="mt-4 pt-3 border-t border-slate-700">
+            <a href="${mod.linkExterno}" class="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs transition">
+              <span>🚀</span> ${mod.linkTexto}
+            </a>
+          </div>
+        `;
+      }
+      modalCorpo.innerHTML = htmlCorpo;
+
+      const jaConcluido = progresso.includes(id);
+      btnConcluirModal.textContent = jaConcluido ? 'Desmarcar Conclusão' : 'Marcar como Concluído';
+      btnConcluirModal.className = jaConcluido 
+        ? 'flex-1 py-2.5 px-4 rounded-xl font-bold bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm transition'
+        : 'flex-1 py-2.5 px-4 rounded-xl font-bold bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm transition active:scale-95 shadow';
+
+      modalModulo.classList.remove('hidden');
+    }
+
+    btnConcluirModal.onclick = () => {
+      if (moduloAbertoId === null) return;
+
+      if (progresso.includes(moduloAbertoId)) {
+        progresso = progresso.filter(item => item !== moduloAbertoId);
+      } else {
+        progresso.push(moduloAbertoId);
+      }
+
+      localStorage.setItem('cartografia_progresso', JSON.stringify(progresso));
+      fecharModal();
+      renderizarMenu();
+    };
+
+    function fecharModal() {
+      modalModulo.classList.add('hidden');
+      moduloAbertoId = null;
+    }
+
+    function atualizarBarra() {
+      const total = modulos.length;
+      const concluidos = progresso.length;
+      const pct = Math.round((concluidos / total) * 100);
+
+      barraProgressoEl.style.width = `${pct}%`;
+      txtProgressoEl.textContent = `${concluidos} de ${total} concluídos (${pct}%)`;
+    }
+
+    function zerarProgresso() {
+      if (confirm('Deseja realmente reiniciar todo o progresso da trilha didática?')) {
+        progresso = [];
+        localStorage.removeItem('cartografia_progresso');
+        renderizarMenu();
+      }
+    }
+
+    renderizarMenu();
+  </script>
+</body>
+</html>
